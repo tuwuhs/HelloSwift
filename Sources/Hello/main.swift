@@ -229,3 +229,19 @@ func helloScalarGraph() {
 
 print()
 helloScalarGraph()
+
+// Doesn't work, currently matvec and matmul only work for square matrix
+// let A = FixedSizeMatrix<Array3<Vector2>>(rows: Vector2(1, 2), Vector2(3, 4), Vector2(5, 6))
+// let b = Vector2(1, -1)
+// print(matvec(A, b))
+
+var vars = VariableAssignments()
+let qID = vars.store(AdditiveScalar(0.0))
+let q = PriorFactor(qID, AdditiveScalar(3.0))
+// print(q.errorVector(AdditiveScalar(0.0)))
+// let (e, pb) = valueWithPullback(at: AdditiveScalar(0.0), in: q.errorVector)
+// print(e)
+// print(pb(Vector1(1.0)))
+let (e, de) = valueWithDifferential(at: AdditiveScalar(0.0), in: q.errorVector)
+print(e)
+print(de(Vector1(1.0)))
